@@ -4,6 +4,7 @@ const cors = require("cors");
 const app = express();
 
 const form_routes = require("./routes/form_routes");
+const { connectToDB } = require("./dbConnection/dbConnection");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -24,4 +25,6 @@ app.use("/", form_routes);
 
 const port = process.env.PORT || 3001;
 
-app.listen(port, () => console.log("callback function while listening"));
+connectToDB(() => {
+  app.listen(port, () => console.log("callback function while listening"));
+});

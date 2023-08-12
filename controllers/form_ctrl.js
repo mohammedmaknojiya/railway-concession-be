@@ -49,8 +49,22 @@ const getUserDetails = async (req, res) => {
   }
 };
 
-const getUserList = (req, res) => {
-  res.status(200).json({ data: [{ id: 1, name: "abc" }] });
+const getUserList = async (req, res) => {
+  try {
+    const result = await UsersDetails.find();
+    if (result) {
+      res.status(201).json(result);
+    } else {
+      res.status(404).json({
+        message: `Unable to fetch applications list`,
+      });
+    }
+  } catch (err) {
+    return res.send({
+      message: "Unable to fetch applications list",
+      err,
+    });
+  }
 };
 
 exports.addUser = addUser;

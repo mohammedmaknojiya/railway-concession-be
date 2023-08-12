@@ -12,4 +12,10 @@ router.get("/applicationsList", formCtrl.getUserList);
 //get user details
 router.get("/:emailID", formCtrl.getUserDetails);
 
+//approve user application
+router.post("/approve", formCtrl.approveUserReq);
+
+//add remarks
+router.post("/remarks", formCtrl.addRemarks);
+
 module.exports = router;

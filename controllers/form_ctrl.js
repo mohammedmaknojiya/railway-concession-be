@@ -67,6 +67,58 @@ const getUserList = async (req, res) => {
   }
 };
 
+const approveUserReq = async (req, res) => {
+  const { id } = req.body;
+  try {
+    const result = await UsersDetails.findByIdAndUpdate(
+      id,
+      {
+        status: "Issued",
+      },
+      { new: true }
+    );
+    if (result) {
+      res.status(201).json(result);
+    } else {
+      res.status(404).json({
+        message: "Unable to approve application request",
+      });
+    }
+  } catch (err) {
+    return res.send({
+      message: "Unable to approve application request",
+      err,
+    });
+  }
+};
+
+const addRemarks = async (req, res) => {
+  const { id, remarks } = req.body;
+  try {
+    const result = await UsersDetails.findByIdAndUpdate(
+      id,
+      {
+        remarks,
+      },
+      { new: true }
+    );
+    if (result) {
+      res.status(201).json(result);
+    } else {
+      res.status(404).json({
+        message: "Unable to add remarks",
+      });
+    }
+  } catch (err) {
+    return res.send({
+      message: "Unable to add remarks",
+      err,
+    });
+  }
+};
+
 exports.addUser = addUser;
 exports.getUserList = getUserList;
 exports.getUserDetails = getUserDetails;
+exports.approveUserReq = approveUserReq;
+exports.addRemarks = addRemarks;
